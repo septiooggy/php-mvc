@@ -1,0 +1,40 @@
+filebeat.inputs:
+- type: filestream
+  id: log
+  enabled: true
+  paths:
+    - C:\inetpub\logs\LogFiles\W3SVC1\u_ex240731.log
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: true
+  reload.period: 10s
+
+setup.template.settings:
+  index.number_of_shards: 2
+  #index.codec: best_compression
+  #_source.enabled: false
+
+#name:
+tags: ["acction-ws"]
+#setup.dashboards.enabled: false
+#setup.dashboards.url:
+setup.kibana:
+   #host: "localhost:5601"
+
+output.logstash:
+  hosts: ["10.91.1.18:5099"]
+
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
+
+monitoring.enabled: true
+monitoring.elasticsearch:
+  hosts: ["10.91.1.82:9200"]
+  protocol: "https"
+  username: "filebeat"
+  password: "ZmlsZWJlYXQ="
+  ssl.certificate_authorities: ["C:\\ELK\\Certificate8\\ca.crt"]

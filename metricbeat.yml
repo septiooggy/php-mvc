@@ -1,0 +1,37 @@
+metricbeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: true
+  reload.period: 10s
+
+setup.template.settings:
+  index.number_of_shards: 1
+  index.codec: best_compression
+  #_source.enabled: false
+
+#name: AF-WLSSBY33
+tags: ["WLS-AMAN-PROD"]
+#setup.dashboards.enabled: false
+#setup.dashboards.url:
+#setup.kibana:
+  #host: "localhost:5601"
+output.elasticsearch:
+  hosts: ["10.91.1.82:9200"]
+  preset: balanced
+  protocol: "https"
+  username: "metricbeat"
+  password: "bWV0cmljYmVhdA=="
+  ssl.certificate_authorities: ["D:\\ELK\\Certificate8\\ca.crt"]
+
+processors:
+  - add_host_metadata: ~
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
+
+monitoring.enabled: true
+monitoring.elasticsearch:
+  hosts: ["10.91.1.82:9200"]
+  protocol: "https"
+  username: "metricbeat"
+  password: "bWV0cmljYmVhdA=="
+  ssl.certificate_authorities: ["D:\\ELK\\Certificate8\\ca.crt"]
