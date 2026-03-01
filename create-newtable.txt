@@ -2,5 +2,5 @@ create table baru di support system :
 - tambah no
 - tambah activity
 - tambah date
-- tambah nip karyawan
 - tambah nama karyawan
+- tambah no divisi
